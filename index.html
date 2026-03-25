@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meridian AI | The Human Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --font-sans: 'Instrument Sans', sans-serif;
+        --font-mono: 'Geist Mono', monospace;
+        --color-primary: #0F2854;
+        --color-secondary: #1C4D8D;
+        --color-background: #ffffff;
+        --color-text: #0F2854;
+        --color-text-light: #ffffff;
+        --color-glass-bg: rgba(255, 255, 255, 0.85);
+        --color-glass-bg-floating: rgba(255, 255, 255, 0.2);
+        --color-glass-border: rgba(255, 255, 255, 0.4);
+        --color-nav-hover: #1C4D8D;
+        --color-nav-hover-bg: rgba(28, 77, 141, 0.05);
+      }
+      body {
+        font-family: var(--font-sans);
+        background-color: #ffffff;
+        color: #0F2854;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Custom Scrollbar for that futuristic feel */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(73, 136, 196, 0.5);
+        border-radius: 10px;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "framer-motion": "https://esm.sh/framer-motion@^12.26.2",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
