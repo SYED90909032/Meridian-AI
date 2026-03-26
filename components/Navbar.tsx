@@ -1,3 +1,11 @@
+/**
+ * Meridian AI — Proprietary Source Code
+ * © 2026 Meridian AI Systems. All rights reserved.
+ * Unauthorized copying, reproduction, distribution, or reuse of this
+ * codebase or any connected services is strictly prohibited.
+ * Internal systems, workflows, and implementation details are private.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SPRING_PRESETS } from '../constants';
@@ -16,6 +24,30 @@ const Navbar = () => {
   }, []);
 
   const scrollToSection = (id: string) => {
+    if (id === 'contact') {
+      window.location.hash = '#contact';
+      return;
+    }
+
+    if (id === 'about') {
+      window.location.hash = '#about';
+      return;
+    }
+
+    if (window.location.hash === '#contact' || window.location.hash === '#about') {
+      // If leaving standalone pages, reset hash and let it mount before scrolling
+      window.location.hash = id === 'hero' ? '' : id;
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return;
+    }
+
+    // Standard in-page navigation
+    window.location.hash = id === 'hero' ? '' : id;
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -26,8 +58,8 @@ const Navbar = () => {
     { id: 1, label: 'Home', action: () => scrollToSection('hero') },
     { id: 2, label: 'Services', action: () => scrollToSection('services') },
     { id: 3, label: 'AI Automation', action: () => scrollToSection('automation') },
-    { id: 4, label: 'Articles', action: () => scrollToSection('agents') },
-    { id: 5, label: 'About', action: () => scrollToSection('vision') },
+    { id: 4, label: 'Contact Us', action: () => scrollToSection('contact') },
+    { id: 5, label: 'About', action: () => scrollToSection('about') },
   ];
 
   if (isMobile) {
@@ -36,9 +68,9 @@ const Navbar = () => {
         position="right"
         items={items}
         logoUrl=""
-        menuButtonColor="#0F2854"
-        openMenuButtonColor="#0F2854"
-        accentColor="#1C4D8D"
+        menuButtonColor="#112D4E"
+        openMenuButtonColor="#112D4E"
+        accentColor="#3F72AF"
         isFixed={true}
         closeOnClickAway={true}
       />
@@ -74,7 +106,7 @@ const Navbar = () => {
           font-family: serif;
           font-weight: 700;
           font-size: 1.25rem;
-          color: #0F2854;
+          color: #112D4E;
           white-space: nowrap;
           cursor: pointer;
         }
@@ -97,7 +129,7 @@ const Navbar = () => {
           text-transform: uppercase;
           letter-spacing: 0.05em;
           font-size: 0.75rem;
-          color: #0F2854;
+          color: #112D4E;
           transition: color 0.3s ease;
           white-space: nowrap;
           position: relative;
@@ -110,11 +142,11 @@ const Navbar = () => {
           left: 0;
           width: 0%;
           height: 2px;
-          background-color: #1C4D8D;
+          background-color: #3F72AF;
           transition: width 0.3s ease;
         }
         .nav-link:hover .nav-text {
-          color: #1C4D8D;
+          color: #3F72AF;
         }
         .nav-link:hover .nav-text::after {
           width: 100%;

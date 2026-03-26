@@ -10,12 +10,12 @@ export const COLORS = {
   // Creative Corporate Blue Theme
   // Background: White
   base: '#ffffff', 
-  // Text: Deep Navy (#0F2854)
-  navy: '#0F2854', 
-  // Accent: Strong Blue (#1C4D8D)
-  accent: '#1C4D8D', 
-  // Secondary: Bright Blue (#4988C4)
-  stone: '#4988C4',
+  // Text: Deep Navy (#112D4E)
+  navy: '#112D4E', 
+  // Accent: Strong Blue (#3F72AF)
+  accent: '#3F72AF', 
+  // Secondary: Bright Blue (#3F72AF)
+  stone: '#3F72AF',
   // Glass Border: Light Blue with opacity
   glassBorder: 'rgba(73, 136, 196, 0.3)',
 };

@@ -59,7 +59,7 @@ export function ExpandableCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-md h-full w-full z-10"
+            className="fixed inset-0 bg-[#F9F7F7]/50 dark:bg-black/50 backdrop-blur-md h-full w-full z-10"
           />
         )}
       </AnimatePresence>
@@ -100,7 +100,7 @@ export function ExpandableCard({
                     </motion.p>
                     <motion.h3
                       layoutId={`title-${title}-${id}`}
-                      className="font-semibold text-black dark:text-white text-4xl sm:text-4xl mt-0.5"
+                      className="font-semibold text-black dark:text-[#F9F7F7] text-4xl sm:text-4xl mt-0.5"
                     >
                       {title}
                     </motion.h3>
@@ -108,7 +108,7 @@ export function ExpandableCard({
                   <motion.button
                     aria-label="Close card"
                     layoutId={`button-${title}-${id}`}
-                    className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-950 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-950 dark:text-white/70 text-black/70 border border-gray-200/90 dark:border-zinc-900 hover:border-gray-300/90 hover:text-black dark:hover:text-white dark:hover:border-zinc-800 transition-colors duration-300 focus:outline-none"
+                    className="h-10 w-10 shrink-0 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-950 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-950 dark:text-[#F9F7F7]/70 text-black/70 border border-gray-200/90 dark:border-zinc-900 hover:border-gray-300/90 hover:text-black dark:hover:text-[#F9F7F7] dark:hover:border-zinc-800 transition-colors duration-300 focus:outline-none"
                     onClick={() => setActive(false)}
                   >
                     <motion.div
@@ -179,7 +179,7 @@ export function ExpandableCard({
               </motion.p>
               <motion.h3
                 layoutId={`title-${title}-${id}`}
-                className="text-black dark:text-white md:text-left font-semibold"
+                className="text-black dark:text-[#F9F7F7] md:text-left font-semibold"
               >
                 {title}
               </motion.h3>
@@ -188,7 +188,7 @@ export function ExpandableCard({
               aria-label="Open card"
               layoutId={`button-${title}-${id}`}
               className={cn(
-                "h-8 w-8 shrink-0 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-950 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-950 dark:text-white/70 text-black/70 border border-gray-200/90 dark:border-zinc-900 hover:border-gray-300/90 hover:text-black dark:hover:text-white dark:hover:border-zinc-800 transition-colors duration-300  focus:outline-none",
+                "h-8 w-8 shrink-0 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-950 text-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-950 dark:text-[#F9F7F7]/70 text-black/70 border border-gray-200/90 dark:border-zinc-900 hover:border-gray-300/90 hover:text-black dark:hover:text-[#F9F7F7] dark:hover:border-zinc-800 transition-colors duration-300  focus:outline-none",
                 className,
               )}
             >

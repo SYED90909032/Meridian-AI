@@ -24,27 +24,27 @@ const JudgesMode = () => {
           className="fixed inset-0 z-[100] pointer-events-none"
         >
           {/* Grid Overlay */}
-          <div className="absolute inset-0 bg-[#0F2854]/5 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-50" />
+          <div className="absolute inset-0 bg-[#112D4E]/5 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-50" />
           <div className="absolute inset-0 grid grid-cols-12 gap-4 px-8 opacity-20 pointer-events-none">
              {Array.from({ length: 12 }).map((_, i) => (
-                 <div key={i} className="h-full border-r border-[#1C4D8D] border-dashed" />
+                 <div key={i} className="h-full border-r border-[#3F72AF] border-dashed" />
              ))}
           </div>
 
           {/* Annotations */}
-          <div className="absolute top-1/2 left-10 -translate-y-1/2 max-w-sm bg-[#0F2854]/90 text-white p-6 rounded-lg backdrop-blur-md border border-[#4988C4]/20 font-mono text-xs">
-            <h4 className="text-[#4988C4] font-bold mb-2 uppercase">Design Rationale</h4>
+          <div className="absolute top-1/2 left-10 -translate-y-1/2 max-w-sm bg-[#112D4E]/90 text-[#F9F7F7] p-6 rounded-lg backdrop-blur-md border border-[#3F72AF]/20 font-mono text-xs">
+            <h4 className="text-[#3F72AF] font-bold mb-2 uppercase">Design Rationale</h4>
             <ul className="space-y-4">
               <li>
-                <strong className="block text-[#BDE8F5]">Color Space</strong>
+                <strong className="block text-[#DBE2EF]">Color Space</strong>
                 Custom corporate blue gamut utilized for trustworthiness and authority. High contrast ratios maintained.
               </li>
               <li>
-                <strong className="block text-[#BDE8F5]">Interaction Physics</strong>
+                <strong className="block text-[#DBE2EF]">Interaction Physics</strong>
                 Spring(mass:1, stiff:120, damp:8) applied to all micro-interactions for organic tactile feedback.
               </li>
               <li>
-                <strong className="block text-[#BDE8F5]">Scrollytelling</strong>
+                <strong className="block text-[#DBE2EF]">Scrollytelling</strong>
                 IntersectionObservers trigger 3D transforms on scroll progress. 4 parallax layers active.
               </li>
             </ul>

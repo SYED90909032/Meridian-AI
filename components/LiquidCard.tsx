@@ -27,14 +27,14 @@ const LiquidCard: React.FC<LiquidCardProps> = ({ title, subtitle, question, desc
       onTap={() => setIsOpen(!isOpen)}
     >
       <motion.div
-        className="relative z-10 p-8 rounded-xl cursor-pointer group bg-white"
+        className="relative z-10 p-8 rounded-xl cursor-pointer group bg-[#F9F7F7]"
         style={{
           border: '1px solid rgba(73, 136, 196, 0.2)',
           boxShadow: '0 4px 20px rgba(15, 40, 84, 0.05)',
         }}
         whileHover={{
           y: -4,
-          borderColor: '#1C4D8D',
+          borderColor: '#3F72AF',
           boxShadow: '0 12px 40px rgba(28, 77, 141, 0.15)',
         }}
         animate={{
@@ -43,20 +43,20 @@ const LiquidCard: React.FC<LiquidCardProps> = ({ title, subtitle, question, desc
         transition={SPRING_PRESETS.BOUNCY}
       >
         <div className="flex items-start justify-between mb-6">
-          <div className="p-4 rounded-lg bg-[#BDE8F5]/20 border border-[#4988C4]/20 text-[#1C4D8D]">
+          <div className="p-4 rounded-lg bg-[#DBE2EF]/20 border border-[#3F72AF]/20 text-[#3F72AF]">
             <IconComponent size={28} strokeWidth={1.5} />
           </div>
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-             <Icons.Plus size={24} className="text-[#1C4D8D]" />
+             <Icons.Plus size={24} className="text-[#3F72AF]" />
           </div>
         </div>
 
-        <h3 className="text-2xl font-serif font-bold mb-1 text-[#0F2854]">
+        <h3 className="text-2xl font-serif font-bold mb-1 text-[#112D4E]">
           {title}
         </h3>
-        <p className="text-xs font-mono uppercase tracking-widest text-[#4988C4] mb-4">{subtitle}</p>
+        <p className="text-xs font-mono uppercase tracking-widest text-[#3F72AF] mb-4">{subtitle}</p>
         
-        <p className="text-lg font-medium text-[#1C4D8D] mb-4">
+        <p className="text-lg font-medium text-[#3F72AF] mb-4">
           {question}
         </p>
 
@@ -70,10 +70,10 @@ const LiquidCard: React.FC<LiquidCardProps> = ({ title, subtitle, question, desc
               className="overflow-hidden"
             >
               <div className="pt-4 border-t border-black/5">
-                <p className="text-base text-[#0F2854] leading-relaxed mb-4">
+                <p className="text-base text-[#112D4E] leading-relaxed mb-4">
                   {description}
                 </p>
-                <div className="flex items-center gap-2 text-[#1C4D8D] font-bold text-sm uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-[#3F72AF] font-bold text-sm uppercase tracking-wider">
                   <span>Explore Architecture</span>
                   <Icons.ArrowRight size={16} />
                 </div>

@@ -11,9 +11,9 @@ export const StaggeredMenu = ({
   displayItemNumbering = true,
   className,
   logoUrl = '',
-  menuButtonColor = '#0F2854',
-  openMenuButtonColor = '#0F2854',
-  accentColor = '#1C4D8D',
+  menuButtonColor = '#112D4E',
+  openMenuButtonColor = '#112D4E',
+  accentColor = '#3F72AF',
   changeMenuColorOnOpen = true,
   isFixed = true,
   closeOnClickAway = true,
@@ -376,7 +376,7 @@ export const StaggeredMenu = ({
               height={24}
             />
           ) : (
-             <div className="nav-brand" onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' })} style={{ fontFamily: 'serif', fontWeight: 700, fontSize: '1.25rem', color: '#0F2854', whiteSpace: 'nowrap', cursor: 'pointer' }}>
+             <div className="nav-brand" onClick={() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' })} style={{ fontFamily: 'serif', fontWeight: 700, fontSize: '1.25rem', color: '#112D4E', whiteSpace: 'nowrap', cursor: 'pointer' }}>
                 Meridian AI
              </div>
           )}

@@ -65,17 +65,17 @@ const FlipCard: React.FC<FlipCardProps> = ({
             alt={`hero-${index}`}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#0F2854]/20 transition-colors group-hover:bg-transparent" />
+          <div className="absolute inset-0 bg-[#112D4E]/20 transition-colors group-hover:bg-transparent" />
         </div>
 
         {/* Back Face */}
         <div
-          className="absolute inset-0 h-full w-full overflow-hidden rounded-md shadow-md bg-[#0F2854] flex flex-col items-center justify-center p-2 border border-[#4988C4]"
+          className="absolute inset-0 h-full w-full overflow-hidden rounded-md shadow-md bg-[#112D4E] flex flex-col items-center justify-center p-2 border border-[#3F72AF]"
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
           <div className="text-center">
-            <p className="text-[6px] font-bold text-[#4988C4] uppercase tracking-widest mb-1">Language</p>
-            <p className="text-[8px] font-medium text-white">{language}</p>
+            <p className="text-[6px] font-bold text-[#3F72AF] uppercase tracking-widest mb-1">Language</p>
+            <p className="text-[8px] font-medium text-[#F9F7F7]">{language}</p>
           </div>
         </div>
       </motion.div>
@@ -276,8 +276,8 @@ export default function ScrollMorphHero() {
   const contentY = useTransform(smoothMorph, [0.8, 1], [20, 0]);
 
   return (
-    <div className="relative w-full h-screen border-b border-[#0F2854]/10 rounded-lg overflow-hidden bg-white">
-      <div ref={containerRef} className="relative w-full h-full bg-white overflow-hidden">
+    <div className="relative w-full h-screen border-b border-[#112D4E]/10 rounded-lg overflow-hidden bg-[#F9F7F7]">
+      <div ref={containerRef} className="relative w-full h-full bg-[#F9F7F7] overflow-hidden">
         <div className="flex h-full w-full flex-col items-center justify-center perspective-1000">
           
           {/* Enhanced Grid Background */}
@@ -287,7 +287,7 @@ export default function ScrollMorphHero() {
             
             {/* Animated Main Grid */}
             <motion.div 
-              className="absolute inset-0 bg-[linear-gradient(to_right,#1C4D8D15_1px,transparent_1px),linear-gradient(to_bottom,#1C4D8D15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]"
+              className="absolute inset-0 bg-[linear-gradient(to_right,#3F72AF15_1px,transparent_1px),linear-gradient(to_bottom,#3F72AF15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]"
               style={{ 
                 y: useTransform(smoothMorph, [0, 1], [0, 100]),
                 scale: useTransform(smoothMorph, [0, 1], [1, 1.05])
@@ -296,7 +296,7 @@ export default function ScrollMorphHero() {
             
             {/* Fine Inner Grid */}
             <motion.div 
-              className="absolute inset-0 bg-[linear-gradient(to_right,#1C4D8D08_1px,transparent_1px),linear-gradient(to_bottom,#1C4D8D08_1px,transparent_1px)] bg-[size:1rem_1rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]"
+              className="absolute inset-0 bg-[linear-gradient(to_right,#3F72AF08_1px,transparent_1px),linear-gradient(to_bottom,#3F72AF08_1px,transparent_1px)] bg-[size:1rem_1rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]"
               style={{ 
                 y: useTransform(smoothMorph, [0, 1], [0, -50]),
                 opacity: useTransform(smoothMorph, [0, 1], [0.5, 1])
@@ -305,11 +305,11 @@ export default function ScrollMorphHero() {
 
             {/* Glowing Orbs for depth */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[#4988C4] rounded-full blur-[120px] mix-blend-multiply"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[#3F72AF] rounded-full blur-[120px] mix-blend-multiply"
               style={{ opacity: useTransform(smoothMorph, [0, 1], [0.05, 0.15]) }}
             />
             <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-[#1C4D8D] rounded-full blur-[100px] mix-blend-multiply"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-[#3F72AF] rounded-full blur-[100px] mix-blend-multiply"
               style={{ opacity: useTransform(smoothMorph, [0, 1], [0.05, 0.1]) }}
             />
           </div>
@@ -320,7 +320,7 @@ export default function ScrollMorphHero() {
               initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
               animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 1 - morphValue * 2, y: 0, filter: "blur(0px)" } : { opacity: 0, filter: "blur(10px)" }}
               transition={{ duration: 1 }}
-              className="text-3xl sm:text-4xl md:text-6xl font-serif text-[#0F2854]"
+              className="text-3xl sm:text-4xl md:text-6xl font-serif text-[#112D4E]"
             >
               Meridian AI
             </motion.h1>
@@ -328,7 +328,7 @@ export default function ScrollMorphHero() {
               initial={{ opacity: 0 }}
               animate={introPhase === "circle" && morphValue < 0.5 ? { opacity: 0.5 - morphValue } : { opacity: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="mt-2 md:mt-4 text-[10px] md:text-sm font-mono tracking-[0.2em] md:tracking-[0.3em] text-[#4988C4]"
+              className="mt-2 md:mt-4 text-[10px] md:text-sm font-mono tracking-[0.2em] md:tracking-[0.3em] text-[#3F72AF]"
             >
               CLASSICAL INTELLIGENCE
             </motion.p>
@@ -341,9 +341,9 @@ export default function ScrollMorphHero() {
           >
             <MagicText 
               text="The Protocol"
-              className="text-3xl md:text-5xl font-serif text-[#0F2854] tracking-tight mb-4 justify-center"
+              className="text-3xl md:text-5xl font-serif text-[#112D4E] tracking-tight mb-4 justify-center"
             />
-            <p className="text-sm md:text-base font-sans text-[#1C4D8D] max-w-lg leading-relaxed">
+            <p className="text-sm md:text-base font-sans text-[#3F72AF] max-w-lg leading-relaxed">
               We translate chaos into cognition. <br className="hidden md:block" />
               Scroll to witness the architecture of tomorrow.
             </p>
@@ -418,7 +418,7 @@ export default function ScrollMorphHero() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#1C4D8D] animate-bounce">
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#3F72AF] animate-bounce">
          ↓
       </div>
     </div>

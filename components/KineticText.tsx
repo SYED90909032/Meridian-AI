@@ -22,7 +22,7 @@ const KineticText: React.FC<KineticTextProps> = ({ text, className = "", stagger
             y: -5,
             rotateZ: Math.random() * 6 - 3, // Random between -3 and 3
             scale: 1.1,
-            color: "#1C4D8D",
+            color: "#3F72AF",
             transition: SPRING_PRESETS.CRITICAL_DAMPED
           }}
           initial={{ y: 0, rotateZ: 0, scale: 1 }}

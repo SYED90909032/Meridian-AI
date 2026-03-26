@@ -14,7 +14,7 @@ const FloatingCta = () => {
             key="orb"
             className="w-20 h-20 rounded-full flex items-center justify-center cursor-pointer shadow-2xl relative"
             style={{
-              background: 'conic-gradient(from 180deg, #1C4D8D, #0F2854, #1C4D8D)',
+              background: 'conic-gradient(from 180deg, #3F72AF, #112D4E, #3F72AF)',
             }}
             whileHover={{ scale: 1.1, rotate: 180 }}
             whileTap={{ scale: 0.9 }}
@@ -24,8 +24,8 @@ const FloatingCta = () => {
             exit={{ scale: 0, opacity: 0 }}
             transition={SPRING_PRESETS.BOUNCY}
           >
-            <div className="absolute inset-1 rounded-full bg-white/10 backdrop-blur-md" />
-            <Icons.Sparkles className="text-white relative z-10" size={32} />
+            <div className="absolute inset-1 rounded-full bg-[#F9F7F7]/10 backdrop-blur-md" />
+            <Icons.Sparkles className="text-[#F9F7F7] relative z-10" size={32} />
           </motion.button>
     </div>
   );
