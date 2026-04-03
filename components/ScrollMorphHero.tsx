@@ -116,7 +116,13 @@ export default function ScrollMorphHero() {
   const [introPhase, setIntroPhase] = useState<AnimationPhase>("scatter");
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
+  // --- Animation completion gate ---
+  // isAnimationComplete: true once virtualScroll has reached MAX_SCROLL.
+  // hasScrolledToNext:   prevents the section-jump from firing more than once per cycle.
+  const isAnimationComplete = useRef(false);
+  const hasScrolledToNext = useRef(false);
+
   // --- Container Size ---
   useEffect(() => {
     if (!containerRef.current) return;
@@ -145,69 +151,66 @@ export default function ScrollMorphHero() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Intelligent Scroll Handler
+    // ── Desktop wheel handler ────────────────────────────────────────────────
     const handleWheel = (e: WheelEvent) => {
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
       const currentScroll = scrollRef.current;
-      
       const atBottom = currentScroll >= MAX_SCROLL;
       const atTop = currentScroll <= 0;
-      
-      // We only want to reverse the animation if the user is at the top of the page.
-      // If they are scrolling up from the footer, we let the window scroll naturally.
-      const isWindowAtTop = window.scrollY < 5; 
+      const isWindowAtTop = window.scrollY < 5;
+      const desktopMultiplier = 0.82; // subtle creative deceleration
 
       if (isScrollingDown) {
-        // If we haven't finished the animation, hijack the scroll
         if (!atBottom) {
+          // Animation still in progress — grab this event and advance Virtual Scroll
           e.preventDefault();
-          const newScroll = Math.min(currentScroll + e.deltaY, MAX_SCROLL);
+          const newScroll = Math.min(currentScroll + e.deltaY * desktopMultiplier, MAX_SCROLL);
           scrollRef.current = newScroll;
           virtualScroll.set(newScroll);
         }
-        // If atBottom is true, we do NOT preventDefault. 
-        // This allows the browser to scroll the window down naturally to the next section.
+        // If atBottom is true, let the browser's default scroll behaviour take over.
+        // It will smoothly scroll the user down to the next section.
       } else if (isScrollingUp) {
-        // Only hijack upward scroll if we are physically at the top of the page
-        // AND we haven't finished reversing the animation yet.
         if (isWindowAtTop && !atTop) {
           e.preventDefault();
-          const newScroll = Math.max(currentScroll + e.deltaY, 0);
+          const newScroll = Math.max(currentScroll + e.deltaY * desktopMultiplier, 0);
           scrollRef.current = newScroll;
           virtualScroll.set(newScroll);
         }
       }
     };
-    
-    // Intelligent Touch Handler (for Mobile)
+
+    // ── Mobile touch handler ─────────────────────────────────────────────────
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const handleTouchMove = (e: TouchEvent) => {
-        const touchY = e.touches[0].clientY;
-        const deltaY = touchStartY - touchY; // Positive = scrolling down
-        touchStartY = touchY;
+      const touchY = e.touches[0].clientY;
+      const rawDelta = touchStartY - touchY;   // positive = swiping up = scroll down
+      const deltaY = rawDelta * 2.8;          // 2.8× amplifier for responsive mobile feel
+      touchStartY = touchY;
 
-        const currentScroll = scrollRef.current;
-        const atBottom = currentScroll >= MAX_SCROLL;
-        const atTop = currentScroll <= 0;
-        const isWindowAtTop = window.scrollY < 5;
+      const currentScroll = scrollRef.current;
+      const atBottom = currentScroll >= MAX_SCROLL;
+      const atTop = currentScroll <= 0;
+      const isWindowAtTop = window.scrollY < 5;
 
-        if (deltaY > 0) { // Scrolling Down
-            if (!atBottom) {
-                if (e.cancelable) e.preventDefault();
-                const newScroll = Math.min(Math.max(currentScroll + deltaY, 0), MAX_SCROLL);
-                scrollRef.current = newScroll;
-                virtualScroll.set(newScroll);
-            }
-        } else if (deltaY < 0) { // Scrolling Up
-            if (isWindowAtTop && !atTop) {
-                if (e.cancelable) e.preventDefault();
-                const newScroll = Math.min(Math.max(currentScroll + deltaY, 0), MAX_SCROLL);
-                scrollRef.current = newScroll;
-                virtualScroll.set(newScroll);
-            }
+      if (rawDelta > 0) { // ─ Scrolling down ─
+        if (!atBottom) {
+          // Only block default swipe if animation is in progress
+          if (e.cancelable) e.preventDefault();
+          const newScroll = Math.min(Math.max(currentScroll + deltaY, 0), MAX_SCROLL);
+          scrollRef.current = newScroll;
+          virtualScroll.set(newScroll);
         }
+      } else if (rawDelta < 0) { // ─ Scrolling up ─
+        if (isWindowAtTop && !atTop) {
+          if (e.cancelable) e.preventDefault();
+          const newScroll = Math.min(Math.max(currentScroll + deltaY, 0), MAX_SCROLL);
+          scrollRef.current = newScroll;
+          virtualScroll.set(newScroll);
+        }
+      }
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
@@ -221,10 +224,38 @@ export default function ScrollMorphHero() {
     };
   }, [virtualScroll]);
 
+
+
+  // ── COMPLETION GATE: when animation finishes, release lock → scroll to next section ──
+  useEffect(() => {
+    const unsub = virtualScroll.on('change', (v) => {
+      if (v >= MAX_SCROLL && !hasScrolledToNext.current) {
+        // Mark complete so the scroll lock lifts
+        hasScrolledToNext.current = true;
+        isAnimationComplete.current = true;
+        // Small settle delay, then smoothly advance to the services section
+        setTimeout(() => {
+          const next =
+            document.getElementById('services') ??
+            document.querySelector<HTMLElement>('section:nth-of-type(2)');
+          if (next) next.scrollIntoView({ behavior: 'smooth' });
+        }, 280);
+      }
+      // Reset gate when user scrolls back toward the top
+      if (v <= 20) {
+        hasScrolledToNext.current = false;
+        isAnimationComplete.current = false;
+      }
+    });
+    return () => unsub();
+  }, [virtualScroll]);
+
   const morphProgress = useTransform(virtualScroll, [0, 600], [0, 1]);
-  const smoothMorph = useSpring(morphProgress, { stiffness: 40, damping: 20 });
+  // Desktop: damping 22 (slightly more resistance = premium deceleration feel)
+  // Mobile benefits from the same spring since delta is already amplified at source
+  const smoothMorph = useSpring(morphProgress, { stiffness: 38, damping: 22 });
   const scrollRotate = useTransform(virtualScroll, [600, 3000], [0, 360]);
-  const smoothScrollRotate = useSpring(scrollRotate, { stiffness: 40, damping: 20 });
+  const smoothScrollRotate = useSpring(scrollRotate, { stiffness: 38, damping: 22 });
   const mouseX = useMotionValue(0);
   const smoothMouseX = useSpring(mouseX, { stiffness: 30, damping: 20 });
 
@@ -279,36 +310,36 @@ export default function ScrollMorphHero() {
     <div className="relative w-full h-screen border-b border-[#112D4E]/10 rounded-lg overflow-hidden bg-[#F9F7F7]">
       <div ref={containerRef} className="relative w-full h-full bg-[#F9F7F7] overflow-hidden">
         <div className="flex h-full w-full flex-col items-center justify-center perspective-1000">
-          
+
           {/* Enhanced Grid Background */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
             {/* Base gradient */}
             <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F0F9FF]/40 to-white" />
-            
+
             {/* Animated Main Grid */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-[linear-gradient(to_right,#3F72AF15_1px,transparent_1px),linear-gradient(to_bottom,#3F72AF15_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_30%,transparent_100%)]"
-              style={{ 
+              style={{
                 y: useTransform(smoothMorph, [0, 1], [0, 100]),
                 scale: useTransform(smoothMorph, [0, 1], [1, 1.05])
               }}
             />
-            
+
             {/* Fine Inner Grid */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-[linear-gradient(to_right,#3F72AF08_1px,transparent_1px),linear-gradient(to_bottom,#3F72AF08_1px,transparent_1px)] bg-[size:1rem_1rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_20%,transparent_100%)]"
-              style={{ 
+              style={{
                 y: useTransform(smoothMorph, [0, 1], [0, -50]),
                 opacity: useTransform(smoothMorph, [0, 1], [0.5, 1])
               }}
             />
 
             {/* Glowing Orbs for depth */}
-            <motion.div 
+            <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[#3F72AF] rounded-full blur-[120px] mix-blend-multiply"
               style={{ opacity: useTransform(smoothMorph, [0, 1], [0.05, 0.15]) }}
             />
-            <motion.div 
+            <motion.div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-[#3F72AF] rounded-full blur-[100px] mix-blend-multiply"
               style={{ opacity: useTransform(smoothMorph, [0, 1], [0.05, 0.1]) }}
             />
@@ -339,7 +370,7 @@ export default function ScrollMorphHero() {
             style={{ opacity: contentOpacity, y: contentY }}
             className="absolute top-[15%] z-10 flex flex-col items-center justify-center text-center pointer-events-none px-4"
           >
-            <MagicText 
+            <MagicText
               text="The Protocol"
               className="text-3xl md:text-5xl font-serif text-[#112D4E] tracking-tight mb-4 justify-center"
             />
@@ -382,7 +413,7 @@ export default function ScrollMorphHero() {
                 const startAngle = -90 - (spreadAngle / 2);
                 const step = spreadAngle / (TOTAL_IMAGES - 1);
                 const scrollProgress = Math.min(Math.max(rotateValue / 360, 0), 1);
-                const maxRotation = spreadAngle * 0.8; 
+                const maxRotation = spreadAngle * 0.8;
                 const boundedRotation = -scrollProgress * maxRotation;
                 const currentArcAngle = startAngle + (i * step) + boundedRotation;
                 const arcRad = (currentArcAngle * Math.PI) / 180;
@@ -419,7 +450,7 @@ export default function ScrollMorphHero() {
         </div>
       </div>
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#3F72AF] animate-bounce">
-         ↓
+        ↓
       </div>
     </div>
   );

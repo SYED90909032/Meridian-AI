@@ -24,7 +24,7 @@ export const CEO = {
   name: "Syed Rauf",
   role: "CEO & Founder",
   bio: "Visionary architect of the post-scarcity economy. Leading the charge in human-centric AI systems.",
-  quote: "We don't just build intelligence; we craft the protocol for its coexistence with humanity."
+  quote: "We don't just build intelligence; we architect its integrity."
 };
 
 export const METHODOLOGY = [

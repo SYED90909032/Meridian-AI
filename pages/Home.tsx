@@ -58,7 +58,7 @@ export default function Home() {
             className="max-w-5xl text-center relative z-10"
          >
              <MagicText 
-                text="&quot;We don't just build intelligence; we craft the protocol.&quot;"
+                text="&quot;We don't just build intelligence; we architect its integrity.&quot;"
                 className="text-4xl md:text-7xl font-serif text-[#112D4E] leading-[1.1] justify-center"
              />
              <div className="mt-8 flex justify-center">

@@ -57,7 +57,7 @@ const Navbar = () => {
   const items = [
     { id: 1, label: 'Home', action: () => scrollToSection('hero') },
     { id: 2, label: 'Services', action: () => scrollToSection('services') },
-    { id: 3, label: 'AI Automation', action: () => scrollToSection('automation') },
+    { id: 3, label: 'Careers', action: () => { window.location.hash = '#careers'; } },
     { id: 4, label: 'Contact Us', action: () => scrollToSection('contact') },
     { id: 5, label: 'About', action: () => scrollToSection('about') },
   ];
